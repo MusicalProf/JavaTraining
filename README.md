@@ -1,0 +1,2 @@
+# JavaTraining
+Continuing Java learning.
