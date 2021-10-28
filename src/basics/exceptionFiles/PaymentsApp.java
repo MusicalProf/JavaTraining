@@ -13,7 +13,7 @@ public class PaymentsApp {
 
       // 2. Get the amount and test value.
       Scanner input = new Scanner(System.in);
-
+      input.close();
       // 3. Handle exceptions appropriately
       try {
         payment = input.nextInt();
@@ -27,7 +27,7 @@ public class PaymentsApp {
         System.out.println("Please try again.");
         posPayment = false;
       }
-    }while(!posPayment);   
+    }while(!posPayment);
     
     // 4. Print confirmation.
     System.out.println("Thank you for your payment of $" + payment);

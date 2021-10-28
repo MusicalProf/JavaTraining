@@ -10,6 +10,7 @@ public class CommonExceptions {
     // 2. surround with try-catch block
     try{
       int c = a/b;
+      System.out.println(c);
     } catch (Exception e) {
       System.out.println("CANNOT DIVIDE BY ZERO!");
       System.out.println(e.toString());
