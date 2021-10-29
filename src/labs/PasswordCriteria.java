@@ -69,8 +69,7 @@ public class PasswordCriteria {
         }          
       }
 
-      // Testing passwords.
-
+      // Exception handling
       try{
         if(!validLetter){        
           throw new NoLetterException(password);      
@@ -90,7 +89,6 @@ public class PasswordCriteria {
     }
   }  
 }
-
 
 class InvalidCharacterException extends Exception{
   String password;
