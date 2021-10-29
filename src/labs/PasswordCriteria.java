@@ -19,12 +19,11 @@ public class PasswordCriteria {
 
     // 3. Bringing in the File IO.
     File file = new File(fileName);
+
+    // Instatiating variables to hold test criteria.
     String numbers = "0123456789";
     String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     String characters = "!@#$%^&*()-=_+";
-    boolean validNumber = false;
-    boolean validLetter = false;
-    boolean invalidCharacter = false;
     
     // 4. Establishing the intial Try/Catch block to read through the file.
     try {
@@ -41,22 +40,65 @@ public class PasswordCriteria {
     
     // 5. Checking the passwords for validity.
     for (String password : passwords) {
-      System.out.println(password);
+      boolean validNumber = false;
+      boolean validLetter = false;
+      boolean validCharacter = false;
+      boolean invalidCharacter = false;
+      System.out.println("***** \n" + password);
       // 1. Contains a number
       for(int i = 0; i < password.length(); i++){
-        if((numbers.contains(password.substring(i, i+1)))){
-          System.out.println("Position " + i + " contains the number: " + password.charAt(i));
+        if(numbers.contains(password.substring(i, i+1))){
+          // System.out.println("Position " + i + " contains the number: " + password.charAt(i));          
           validNumber = true;
-        }else if((letters.contains(password.substring(i, i+1)))){
-          System.out.println("Position " + i + " contains a letter: " + password.charAt(i));
+      // 2. Contains a letter
+        }else if(letters.contains(password.substring(i, i+1))){
+          // System.out.println("Position " + i + " contains the letter: " + password.charAt(i));          
           validLetter = true;
+      // 3. Contains a character
+        }else if(characters.contains(password.substring(i, i+1))){
+          // System.out.println("Position " + i + " contains the special character: " + password.charAt(i));
+          validCharacter = true;
         }else{
-          System.out.println("Position " + i + " contains an invalid character: " + password.charAt(i));
+          // System.out.println("Position " + i + " contains an invalid character: " + password.charAt(i));
           invalidCharacter = true;
-        }
-          
+          try {
+            throw new InvalidCharacterException((password.substring(i, i+1)));
+          } catch (InvalidCharacterException e) {
+            e.toString();
+          }
+        }          
       }
-    }  
+
+      // Testing passwords.
+
+      try{
+        if(!validLetter){        
+          throw new NoLetterException(password);      
+        }else if(!validNumber){
+          throw new NoNumberExceptions(password);
+        }else if(!validCharacter){
+          throw new InvalidSpecialCharacter(password);
+        }else if(invalidCharacter){
+          throw new InvalidCharacterException(password);
+        }else{
+          System.out.println("Valid Password.");
+        }
+      }catch(NoNumberExceptions | NoLetterException | InvalidSpecialCharacter | InvalidCharacterException e){
+        System.out.println(e.toString());
+        System.out.println("Invalid Password. Please try again.");
+      }
+    }
+  }  
+}
+
+
+class InvalidCharacterException extends Exception{
+  String password;
+  InvalidCharacterException(String password){
+    this.password = password;
+  }
+  public String toString(){
+    return "Invalid Character: " + password;
   }
 }
 
@@ -67,5 +109,25 @@ class NoNumberExceptions extends Exception{
   }
   public String toString() {
     return "NoNumberExceptions: " + password;
+  }
+}
+
+class NoLetterException extends Exception{
+  String password;
+  NoLetterException(String password) {
+    this.password = password;
+  }
+  public String toString() {
+    return "NoLetterException: " + password;
+  }
+}
+
+class InvalidSpecialCharacter extends Exception{
+  String password;
+  InvalidSpecialCharacter(String password) {
+    this.password = password;
+  }
+  public String toString() {
+    return "InvalidSpecialCharacter: " + password;
   }
 }
