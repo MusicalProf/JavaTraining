@@ -49,7 +49,7 @@ public class CreditCardStatement {
       }else if(transaction.equalsIgnoreCase("debit")){
         balance -= amount;
         System.out.println("Your balance is: $" + Math.round(balance*100.0)/100.0);
-      }
+      } 
       
       }
     if (balance > 0) {
